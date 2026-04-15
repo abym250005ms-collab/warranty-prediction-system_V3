@@ -1,106 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Warranty Prediction Dashboard</title>
-    <style>
-        :root {
-            --bg-a: #0f172a;
-            --bg-b: #1e293b;
-            --card: rgba(255, 255, 255, 0.12);
-            --text: #f8fafc;
-            --muted: #cbd5e1;
-            --high: #ef4444;
-            --medium: #f59e0b;
-            --low: #22c55e;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: var(--text);
-            background: linear-gradient(135deg, var(--bg-a), var(--bg-b));
-            min-height: 100vh;
-        }
-        .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-        .title { font-size: 1.8rem; font-weight: 700; }
-        .subtitle { color: var(--muted); font-size: 0.95rem; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 14px;
-            margin-top: 18px;
-        }
-        .card {
-            background: var(--card);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 14px;
-            padding: 16px;
-            backdrop-filter: blur(8px);
-        }
-        .metric-value { font-size: 1.5rem; font-weight: 700; margin-top: 8px; }
-        .charts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 16px;
-            margin-top: 18px;
-        }
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.2); }
-        th { color: var(--muted); font-weight: 600; }
-        .tag { font-weight: 700; padding: 4px 8px; border-radius: 999px; display: inline-block; }
-        .high { background: rgba(239,68,68,.2); color: #fecaca; }
-        .medium { background: rgba(245,158,11,.2); color: #fde68a; }
-        .low { background: rgba(34,197,94,.2); color: #bbf7d0; }
-        @media (max-width: 768px) {
-            .title { font-size: 1.4rem; }
-            .container { padding: 14px; }
-            .charts { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <div>
-            <div class="title">Warranty Prediction & Cost Forecasting</div>
-            <div class="subtitle">Last updated: {{ data.update_time }}</div>
-        </div>
-        <div class="subtitle">Auto refresh every 60 seconds</div>
+{% extends "base.html" %}
+{% block title %}Warranty Prediction Dashboard{% endblock %}
+{% block content %}
+<section class="hero card slide-up">
+    <div>
+        <h1>Warranty Prediction & Cost Forecasting Dashboard</h1>
+        <p>Monitor claim risk, cost projections, and key risk drivers in one interactive view.</p>
     </div>
-
-    <div class="grid">
-        <div class="card"><div>AUC</div><div class="metric-value">{{ data.claim_metrics.auc }}</div></div>
-        <div class="card"><div>Precision</div><div class="metric-value">{{ data.claim_metrics.precision }}</div></div>
-        <div class="card"><div>Recall</div><div class="metric-value">{{ data.claim_metrics.recall }}</div></div>
-        <div class="card"><div>F1 Score</div><div class="metric-value">{{ data.claim_metrics.f1 }}</div></div>
-        <div class="card"><div>RMSE</div><div class="metric-value">{{ data.cost_metrics.rmse }}</div></div>
-        <div class="card"><div>MAE</div><div class="metric-value">{{ data.cost_metrics.mae }}</div></div>
-        <div class="card"><div>MAPE</div><div class="metric-value">{{ data.cost_metrics.mape }}</div></div>
-        <div class="card"><div>Total Vehicles</div><div class="metric-value">{{ data.total_vehicles }}</div></div>
-        <div class="card"><div>Total Forecast Cost</div><div class="metric-value">{{ data.total_cost }}</div></div>
-        <div class="card"><div>Avg Monthly Cost</div><div class="metric-value">{{ data.avg_cost }}</div></div>
-        <div class="card"><div>High Risk</div><div class="metric-value" style="color: var(--high)">{{ data.risk_counts.High }}</div></div>
-        <div class="card"><div>Medium Risk</div><div class="metric-value" style="color: var(--medium)">{{ data.risk_counts.Medium }}</div></div>
-        <div class="card"><div>Low Risk</div><div class="metric-value" style="color: var(--low)">{{ data.risk_counts.Low }}</div></div>
+    <div class="hero-meta">
+        <span id="health-status" class="status-chip">Checking data status...</span>
+        <span>Updated: {{ data.update_time }}</span>
     </div>
+</section>
 
-    <div class="charts">
-        <div class="card">{{ data.risk_chart | safe }}</div>
-        <div class="card">{{ data.cost_chart | safe }}</div>
-        <div class="card">{{ data.feature_chart | safe }}</div>
-        <div class="card">{{ data.top_vehicles_chart | safe }}</div>
-    </div>
+<section id="kpis" class="kpi-grid">
+    <article class="card kpi-card"><p>AUC-ROC</p><h2>{{ data.claim_metrics.auc }}</h2></article>
+    <article class="card kpi-card"><p>Precision</p><h2>{{ data.claim_metrics.precision }}</h2></article>
+    <article class="card kpi-card"><p>Recall</p><h2>{{ data.claim_metrics.recall }}</h2></article>
+    <article class="card kpi-card"><p>F1 Score</p><h2>{{ data.claim_metrics.f1 }}</h2></article>
+    <article class="card kpi-card"><p>RMSE</p><h2>{{ data.cost_metrics.rmse }}</h2></article>
+    <article class="card kpi-card"><p>MAE</p><h2>{{ data.cost_metrics.mae }}</h2></article>
+    <article class="card kpi-card"><p>MAPE</p><h2>{{ data.cost_metrics.mape }}</h2></article>
+    <article class="card kpi-card"><p>Total Vehicles</p><h2>{{ data.total_vehicles }}</h2></article>
+    <article class="card kpi-card"><p>Total Forecast Cost</p><h2>{{ data.total_cost }}</h2></article>
+    <article class="card kpi-card"><p>Avg Monthly Cost</p><h2>{{ data.avg_cost }}</h2></article>
+    <article class="card kpi-card"><p>High Risk</p><h2 class="risk-high">{{ data.risk_counts.High }}</h2></article>
+    <article class="card kpi-card"><p>Medium Risk</p><h2 class="risk-medium">{{ data.risk_counts.Medium }}</h2></article>
+    <article class="card kpi-card"><p>Low Risk</p><h2 class="risk-low">{{ data.risk_counts.Low }}</h2></article>
+</section>
 
-    <div class="charts">
-        <div class="card table-wrap">
-            <h3>Top 10 High-Risk Vehicles</h3>
+<section id="charts" class="chart-grid">
+    <article class="card chart-card">{{ data.risk_chart | safe }}</article>
+    <article class="card chart-card">{{ data.cost_chart | safe }}</article>
+    <article class="card chart-card">{{ data.feature_chart | safe }}</article>
+    <article class="card chart-card">{{ data.top_vehicles_chart | safe }}</article>
+</section>
+
+<section id="vehicles" class="table-grid">
+    <article class="card table-card">
+        <h3>Top High-Risk Vehicles</h3>
+        <div class="table-wrap">
             <table>
                 <thead>
-                <tr><th>Vehicle ID</th><th>Variant</th><th>Risk Score</th><th>Rank</th><th>Risk</th></tr>
+                <tr><th>Vehicle ID</th><th>Model Variant</th><th>Risk Score</th><th>Rank</th><th>Risk Level</th></tr>
                 </thead>
                 <tbody>
                 {% for vehicle in data.top_vehicles %}
@@ -117,14 +58,16 @@
                         <td>{{ vehicle.model_variant }}</td>
                         <td>{{ "%.2f"|format(risk_pct) }}%</td>
                         <td>{{ vehicle.risk_rank }}</td>
-                        <td><span class="tag {{ cls }}">{{ cls|capitalize }}</span></td>
+                        <td><span class="risk-pill {{ cls }}">{{ cls|capitalize }}</span></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-        <div class="card table-wrap">
-            <h3>12-Month Cost Forecast</h3>
+    </article>
+    <article class="card table-card">
+        <h3>12-Month Cost Forecast</h3>
+        <div class="table-wrap">
             <table>
                 <thead><tr><th>Month</th><th>Forecasted Cost</th></tr></thead>
                 <tbody>
@@ -134,11 +77,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
-
-<script>
-setInterval(() => window.location.reload(), 60000);
-</script>
-</body>
-</html>
+    </article>
+</section>
+{% endblock %}

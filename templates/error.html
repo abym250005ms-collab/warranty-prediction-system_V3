@@ -1,36 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Error</title>
-    <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #f8fafc;
-            padding: 20px;
-        }
-        .box {
-            max-width: 640px;
-            padding: 24px;
-            border-radius: 12px;
-            background: rgba(255,255,255,.12);
-            border: 1px solid rgba(255,255,255,.25);
-            text-align: center;
-        }
-        p { color: #cbd5e1; }
-    </style>
-</head>
-<body>
-<div class="box">
+{% extends "base.html" %}
+{% block title %}Dashboard Error{% endblock %}
+{% block content %}
+<section class="card error-card">
     <h1>Oops! Something went wrong.</h1>
     <p>{{ message }}</p>
-    <p>Please verify files exist in <code>outputs/</code> and try again.</p>
-</div>
-</body>
-</html>
+    {% if details %}
+        <ul>
+            {% for item in details %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>Please run <code>python main.py</code> and refresh the page.</p>
+</section>
+{% endblock %}
