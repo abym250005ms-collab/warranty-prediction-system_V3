@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Warranty Analytics Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<div id="loading-overlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading dashboard...</p>
+</div>
+<header class="site-header">
+    <div class="container nav-wrap">
+        <a class="brand" href="#top">Warranty Insights</a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="#kpis">KPIs</a>
+            <a href="#charts">Charts</a>
+            <a href="#vehicles">High-Risk Vehicles</a>
+        </nav>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">🌙</button>
+    </div>
+</header>
+<main id="top" class="container main-content">
+    {% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+    <div class="container">
+        <p>Warranty Prediction System V3 • Flask + Plotly Dashboard</p>
+    </div>
+</footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
