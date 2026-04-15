@@ -64,7 +64,9 @@ def _extract_year_month(date_text: str) -> str:
     if len(date_text) < YEAR_MONTH_FORMAT_LENGTH:
         return ""
     candidate = date_text[:YEAR_MONTH_FORMAT_LENGTH]
-    if candidate[4] != "-":
+    try:
+        datetime.strptime(candidate, "%Y-%m")
+    except ValueError:
         return ""
     return candidate
 
@@ -124,6 +126,7 @@ def _build_risk_chart(risk_counts: dict[str, int]) -> str:
                 marker=dict(colors=["#ef4444", "#f59e0b", "#22c55e"]),
                 textinfo="label+percent",
                 hovertemplate="%{label}: %{value}<extra></extra>",
+                # Keep fixed order: High -> Medium -> Low.
                 sort=False,
             )
         ]
