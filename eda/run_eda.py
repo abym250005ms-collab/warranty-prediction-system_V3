@@ -41,7 +41,7 @@ def main() -> None:
     df = load_dataset(args.input_file, sheet_name=args.sheet_name)
 
     results = {
-        "data_overview": run_data_overview(df, output_paths["base"] / "eda_plots" / "distributions"),
+        "data_overview": run_data_overview(df, output_paths["distributions"]),
         "univariate": run_univariate_analysis(df, output_paths["distributions"]),
         "relationships": run_relationship_analysis(df, output_paths["correlations"]),
         "temporal": run_temporal_analysis(df, output_paths["temporal"]),
