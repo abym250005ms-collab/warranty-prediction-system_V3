@@ -1,0 +1,35 @@
+Slide 1 - Introduction
+- Open with Montra Electric's need to proactively control warranty risk and cost.
+- Emphasize two linked decisions: who is likely to claim soon and how much monthly cost to reserve.
+- Mention dataset scale: 11,510 claims across 6,733 vehicles and 40 features.
+- Highlight why this matters for operations, finance, and parts planning.
+
+Slide 2 - Data Understanding & Preparation
+- Explain data integration from warranty_claims, vehicles, components, and dealers.
+- Walk through cleaning checks: missing values, duplicates, date validations.
+- Call out engineered features (usage intensity, temporal indicators, repeat-claim flags).
+- Mention quality controls and anomaly flagging (6.0% cost outliers).
+
+Slide 3 - EDA Insights
+- Share top risk variants by claim intensity: TrioX-Cargo (1.92), TrioX-Lite (1.88), TrioX-L2 (1.60).
+- Explain concentration in Powertrain failures and what this means for service readiness.
+- Note seasonal and zone concentration: Monsoon peak share and South highest volume.
+- Reinforce low repeat-claim rate (3.0%) but clear concentration in specific failure classes.
+
+Slide 4 - Methodology
+- Explain XGBoost for claim risk because of non-linear interactions and interpretability via importance.
+- Clarify target is 3-month claim likelihood using claim chronology.
+- Explain Prophet + ARIMA blend: Prophet for seasonality, ARIMA for local trend dynamics.
+- Mention validation metrics and confidence interval reporting for governance.
+
+Slide 5 - Solutions & Results
+- Present prototype baseline honestly: directional signal exists, but precision/recall need improvement.
+- Interpret risk segmentation for operations (high-risk queue for proactive outreach).
+- Walk through forecast outputs by variant and annual budget implication (₹107.4 lakhs).
+- Mention immediate follow-up: threshold tuning, class-imbalance treatment, and exogenous drivers.
+
+Slide 6 - Recommendations & Next Steps
+- Month 1: deploy triage + forecast dashboard + tracking loop.
+- Q1-Q2: variant-level root-cause actions and zone service optimization.
+- Q3-Q4: predictive maintenance and spare-part stocking strategy.
+- Close with KPI governance and expected business impact on cost control and customer experience.
