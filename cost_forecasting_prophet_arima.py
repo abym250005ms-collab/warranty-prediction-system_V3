@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Dict, List, Tuple
 
 import numpy as np
@@ -142,6 +143,9 @@ def forecast_costs(df: pd.DataFrame, periods: int = config.COST_FORECAST_MONTHS)
     outputs: List[pd.DataFrame] = []
     metrics: Dict[str, Dict] = {}
 
+    # Get today's date dynamically
+    today = datetime.now()
+
     for variant in sorted(work_df["model_variant"].dropna().unique()):
         series = _monthly_cost_series(work_df, variant)
         if series.empty:
@@ -152,7 +156,9 @@ def forecast_costs(df: pd.DataFrame, periods: int = config.COST_FORECAST_MONTHS)
         arima_fc = _fit_arima_forecast(series, periods)
         ensemble = _ensemble_forecasts(prophet_fc, arima_fc)
 
-        future_dates = pd.date_range(series.index.max() + pd.offsets.MonthBegin(1), periods=periods, freq="MS")
+        # Generate future dates starting from today
+        future_dates = pd.date_range(start=today, periods=periods, freq="MS")
+        
         variant_forecast = pd.DataFrame(
             {
                 "date": future_dates,
