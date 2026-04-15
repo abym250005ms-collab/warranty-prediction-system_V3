@@ -24,6 +24,7 @@ REQUIRED_METRICS_SECTIONS = {"claim_prediction", "cost_forecasting"}
 REQUIRED_CLAIM_COLUMNS = {"vehicle_id", "model_variant", "risk_score", "risk_rank"}
 REQUIRED_COST_COLUMNS = {"date", "model_variant", "forecasted_cost"}
 REQUIRED_FEATURE_COLUMNS = {"feature", "importance"}
+MONTH_PREFIX_LENGTH = 7
 
 app = Flask(__name__, template_folder=str(TEMPLATE_DIR), static_folder=str(STATIC_DIR))
 
@@ -64,8 +65,8 @@ def _read_json(path: Path) -> dict[str, Any]:
         return {}
     try:
         with path.open("r", encoding="utf-8") as file:
-            payload = json.load(file)
-            return payload if isinstance(payload, dict) else {}
+            data = json.load(file)
+            return data if isinstance(data, dict) else {}
     except (OSError, json.JSONDecodeError):
         return {}
 
@@ -125,7 +126,7 @@ def _build_risk_chart(risk_counts: dict[str, int]) -> str:
 def _build_cost_chart(cost_rows: list[dict[str, str]]) -> tuple[str, list[dict[str, str]]]:
     monthly_totals: dict[str, float] = defaultdict(float)
     for row in cost_rows:
-        date_text = (row.get("date") or "")[:7]
+        date_text = (row.get("date") or "")[:MONTH_PREFIX_LENGTH]
         forecasted = _safe_float(row.get("forecasted_cost"))
         if date_text and forecasted is not None:
             monthly_totals[date_text] += forecasted
