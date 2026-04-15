@@ -15,13 +15,13 @@ Comprehensive warranty analytics pipeline for Montra Electric vehicles.
 
 ## Project Structure
 
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/data_preprocessing.py`
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/claim_prediction_xgboost.py`
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/cost_forecasting_prophet_arima.py`
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/model_evaluation.py`
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/main.py`
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/config.py`
-- `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/requirements.txt`
+- `data_preprocessing.py`
+- `claim_prediction_xgboost.py`
+- `cost_forecasting_prophet_arima.py`
+- `model_evaluation.py`
+- `main.py`
+- `config.py`
+- `requirements.txt`
 
 ## Data
 
@@ -63,21 +63,20 @@ Comprehensive warranty analytics pipeline for Montra Electric vehicles.
 ## Run
 
 ```bash
-cd /home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3
 python -m pip install -r requirements.txt
 python main.py
 ```
 
 ## Outputs
 
-Generated in `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/outputs`:
+Generated in `outputs/`:
 
 - `predictions_claim_risk.csv`
 - `predictions_cost_forecast.csv`
 - `xgboost_feature_importance.csv`
 - `model_metrics.json`
 
-Saved deployment artifacts in `/home/runner/work/warranty-prediction-system_V3/warranty-prediction-system_V3/artifacts`:
+Saved deployment artifacts in `artifacts/`:
 
 - `claim_preprocessor.joblib`
 - `xgboost_claim_model.joblib`
