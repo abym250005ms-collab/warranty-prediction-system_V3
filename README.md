@@ -65,6 +65,7 @@ Comprehensive warranty analytics pipeline for Montra Electric vehicles.
 ```bash
 python -m pip install -r requirements.txt
 python main.py
+python analysis_report.py
 ```
 
 ## Outputs
@@ -75,6 +76,10 @@ Generated in `outputs/`:
 - `predictions_cost_forecast.csv`
 - `xgboost_feature_importance.csv`
 - `model_metrics.json`
+
+Terminal summary report:
+
+- `analysis_report.py` reads generated outputs and prints a presentation-ready report directly in the terminal.
 
 Saved deployment artifacts in `artifacts/`:
 
