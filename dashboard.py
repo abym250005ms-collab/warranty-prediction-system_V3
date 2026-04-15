@@ -24,7 +24,7 @@ REQUIRED_METRICS_SECTIONS = {"claim_prediction", "cost_forecasting"}
 REQUIRED_CLAIM_COLUMNS = {"vehicle_id", "model_variant", "risk_score", "risk_rank"}
 REQUIRED_COST_COLUMNS = {"date", "model_variant", "forecasted_cost"}
 REQUIRED_FEATURE_COLUMNS = {"feature", "importance"}
-MONTH_PREFIX_LENGTH = 7
+YEAR_MONTH_FORMAT_LENGTH = 7
 
 app = Flask(__name__, template_folder=str(TEMPLATE_DIR), static_folder=str(STATIC_DIR))
 
@@ -58,6 +58,15 @@ def _risk_bucket(score: float) -> str:
     if score >= 0.30:
         return "Medium"
     return "Low"
+
+
+def _extract_year_month(date_text: str) -> str:
+    if len(date_text) < YEAR_MONTH_FORMAT_LENGTH:
+        return ""
+    candidate = date_text[:YEAR_MONTH_FORMAT_LENGTH]
+    if candidate[4] != "-":
+        return ""
+    return candidate
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -126,7 +135,7 @@ def _build_risk_chart(risk_counts: dict[str, int]) -> str:
 def _build_cost_chart(cost_rows: list[dict[str, str]]) -> tuple[str, list[dict[str, str]]]:
     monthly_totals: dict[str, float] = defaultdict(float)
     for row in cost_rows:
-        date_text = (row.get("date") or "")[:MONTH_PREFIX_LENGTH]
+        date_text = _extract_year_month(row.get("date") or "")
         forecasted = _safe_float(row.get("forecasted_cost"))
         if date_text and forecasted is not None:
             monthly_totals[date_text] += forecasted
