@@ -31,5 +31,5 @@ Slide 5 - Solutions & Results
 Slide 6 - Recommendations & Next Steps
 - Month 1: deploy triage + forecast dashboard + tracking loop.
 - Q1-Q2: variant-level root-cause actions and zone service optimization.
-- Q3-Q4: predictive maintenance and spare-part stocking strategy.
+- Q3-Q4: predictive maintenance and spare parts stocking strategy.
 - Close with KPI governance and expected business impact on cost control and customer experience.

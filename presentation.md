@@ -32,6 +32,7 @@
 - **Problem 1 (Classification):** XGBoost classifier for 3-month claim risk scoring.
 - **Why XGBoost:** captures non-linear failure behavior, robust on mixed features, provides business-readable feature importance.
 - **Key predictors (prototype Top 5):** use_case_Cargo (24.5%), use_case_Passenger (22.8%), months_in_service (19.9%), subsystem_Controls (16.4%), subsystem_Body (16.3%).
+- *Note:* Percentages above are normalized within the Top 5 features only (not across all model features).
 - **Problem 2 (Forecasting):** Prophet + ARIMA ensemble for monthly warranty cost by model variant.
 - **Validation metrics:** classification (Precision/Recall/F1/ROC-AUC), forecasting (RMSE/MAE/MAPE), with confidence bands.
 
