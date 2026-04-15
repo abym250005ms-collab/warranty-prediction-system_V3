@@ -34,9 +34,19 @@ def evaluate_forecast(actual, predicted) -> Dict[str, float]:
     rmse = float(np.sqrt(mean_squared_error(actual_arr, pred_arr)))
     mae = float(mean_absolute_error(actual_arr, pred_arr))
 
+    # Calculate MAPE with better handling of edge cases
     non_zero_mask = actual_arr != 0
     if non_zero_mask.any():
-        mape = float(np.mean(np.abs((actual_arr[non_zero_mask] - pred_arr[non_zero_mask]) / actual_arr[non_zero_mask])) * 100)
+        # Calculate MAPE only for non-zero actual values
+        mape_values = np.abs((actual_arr[non_zero_mask] - pred_arr[non_zero_mask]) / actual_arr[non_zero_mask]) * 100
+        
+        # Filter out extreme outliers (e.g., MAPE > 500%)
+        mape_values = mape_values[mape_values <= 500]
+        
+        if len(mape_values) > 0:
+            mape = float(np.mean(mape_values))
+        else:
+            mape = float("nan")
     else:
         mape = float("nan")
 
