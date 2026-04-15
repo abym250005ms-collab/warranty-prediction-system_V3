@@ -274,12 +274,7 @@ def _build_dashboard_data() -> tuple[dict[str, Any], list[str], dict[str, bool]]
         importance = _safe_float(row.get("importance"))
         if importance is None:
             continue
-        parsed_features.append(
-            {
-                "feature": row.get("feature", "-"),
-                "importance": importance,
-            }
-        )
+        parsed_features.append({"feature": row.get("feature", "-"), "importance": importance})
     parsed_features.sort(key=lambda row: row["importance"], reverse=True)
     top_features = parsed_features[:15]
 

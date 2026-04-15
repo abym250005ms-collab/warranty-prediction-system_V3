@@ -1,5 +1,6 @@
 (function () {
     const root = document.documentElement;
+    const isDebug = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
     const storageKey = "dashboard-theme";
     const themeToggle = document.getElementById("theme-toggle");
     const loadingOverlay = document.getElementById("loading-overlay");
@@ -37,11 +38,15 @@
                 healthStatus.textContent = "Data status: Degraded";
                 healthStatus.style.color = "#f59e0b";
             }
-            console.info("Dashboard health", payload);
+            if (isDebug) {
+                console.info("Dashboard health", payload);
+            }
         } catch (error) {
             healthStatus.textContent = "Data status: Unavailable";
             healthStatus.style.color = "#ef4444";
-            console.error("Health endpoint error", error);
+            if (isDebug) {
+                console.error("Health endpoint error", error);
+            }
         }
     };
 
@@ -60,7 +65,9 @@
             if (loadingOverlay) {
                 loadingOverlay.classList.add("hidden");
             }
-            console.log("Warranty dashboard fully initialized");
+            if (isDebug) {
+                console.log("Warranty dashboard fully initialized");
+            }
         }, 450);
     });
 })();
