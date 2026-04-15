@@ -66,7 +66,10 @@ Comprehensive warranty analytics pipeline for Montra Electric vehicles.
 python -m pip install -r requirements.txt
 python main.py
 python analysis_report.py
+python dashboard.py
 ```
+
+Open the interactive dashboard at `http://127.0.0.1:5000`.
 
 ## Outputs
 
