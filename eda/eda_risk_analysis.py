@@ -19,7 +19,7 @@ def run_risk_analysis(df: pd.DataFrame, output_dir: str | Path) -> dict:
     if repeat is not None:
         report["overall_repeat_claim_rate"] = float(repeat.mean())
 
-    if {"vehicle_id"}.issubset(df.columns):
+    if "vehicle_id" in df.columns:
         claims_per_vehicle = df.groupby("vehicle_id").size()
         report["average_claims_per_vehicle"] = float(claims_per_vehicle.mean())
         report["vehicles_with_multiple_claims_top20"] = claims_per_vehicle[claims_per_vehicle > 1].sort_values(ascending=False).head(20).to_dict()
@@ -70,4 +70,3 @@ def run_risk_analysis(df: pd.DataFrame, output_dir: str | Path) -> dict:
         plt.close()
 
     return report
-

@@ -112,7 +112,7 @@ def generate_visualizations(df: pd.DataFrame, output_dir: str | Path) -> dict:
         plt.close()
         generated.append(str(path))
 
-    if {"state"}.issubset(df.columns):
+    if "state" in df.columns:
         top_state = df["state"].fillna("Missing").value_counts().head(20)
         plt.figure(figsize=(12, 5))
         sns.barplot(x=top_state.index, y=top_state.values, color="#4C72B0")
